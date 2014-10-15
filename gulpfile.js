@@ -1,6 +1,8 @@
 var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     gutil = require('gulp-util'),
+    clean = require('gulp-clean'),
+    copy = require('gulp-copy'),
     stylus = require('gulp-stylus'),
     nib = require('nib'),
     csso = require('gulp-csso'),
@@ -11,6 +13,7 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     inlineCss = require('gulp-mc-inline-css'),
     concat = require('gulp-concat'),
+    requirejs = require('requirejs'),
     serveStatic = require('serve-static'),
     connect = require('connect'),
     yargs = require('yargs').argv,
@@ -77,7 +80,7 @@ function spriteConfigure(name) {
 // ------------------------------------------------------------------------
 settings.add('templates', {
   src: './src/templates',
-  dist: './dist',
+  dist: '../templates',
   valid_tree: [ '/*.jade', '/**/*.jade' ],
   invalid_tree: [ '/_*.jade', '/**/_*.jade', '/_**/*.jade' ],
   options: {
@@ -92,7 +95,7 @@ settings.add('templates', {
 // ------------------------------------------------------------------------
 settings.add('sprites', {
   src: './src/static/sprites',
-  dist: './dist/static/sprites',
+  dist: '../static/sprites',
   valid_tree: ['core']
 });
 
@@ -101,7 +104,7 @@ settings.add('sprites', {
 // ------------------------------------------------------------------------
 settings.add('styles', {
   src: './src/static/styles',
-  dist: './dist/static/styles',
+  dist: '../static/styles',
   valid_tree: [ '/*.styl', '/**/*.styl' ],
   invalid_tree: [ '/modules/*.styl', '/_**/*.styl' ]
 });
@@ -111,8 +114,10 @@ settings.add('styles', {
 // ------------------------------------------------------------------------
 settings.add('scripts', {
   src: './src/static/scripts',
-  dist: './dist/static/scripts',
-  valid_tree: [ '/*.js', '/**/*.js' ]
+  dist: '../static/scripts',
+  compile_tree: ['/*.js'],
+  valid_tree: [ '/*.js', '/modules/*.js', '/configs/*.js' ],
+  invalid_tree: []
 });
 
 
@@ -134,7 +139,13 @@ gulp.task('styles', function() {
     compress: true
   };
 
-  gulp.src(settings.styles.tree)
+  var tree = settings.styles.valid_tree;
+
+  if (yargs.prod) {
+    tree = settings.styles.tree;
+  }
+
+  gulp.src(tree)
   .pipe(stylus(opt))
   .pipe(csso())
   .pipe(gulp.dest(settings.styles.dist));
@@ -178,6 +189,44 @@ gulp.task('server', function() {
   app.listen(port, host);
 });
 
+
+// ------------------------------------------------------------------------
+// Todo a copiar
+// ------------------------------------------------------------------------
+gulp.task('copy', function() {
+  gulp.src('./src/static/scripts/**')
+  .pipe(gulp.dest(settings.scripts.dist));
+});
+
+// ------------------------------------------------------------------------
+// Requirejs
+// ------------------------------------------------------------------------
+gulp.task('requirejs', function() {
+  requirejs.optimize({
+    baseUrl: './src/static/scripts/',
+    mainConfigFile: './src/static/scripts/configs/require.js',
+    preserveLicenseComments: false,
+    wrap: true,
+    name: 'libs/almond/almond',
+    include: [ 'main' ],
+    insertRequire: [ 'main' ],
+    out: settings.scripts.dist + '/main.js'
+  });
+});
+
+// ------------------------------------------------------------------------
+// Clean
+// ------------------------------------------------------------------------
+gulp.task('clean', function() {
+  gulp.src([
+    settings.scripts.dist + '/configs',
+    settings.scripts.dist + '/libs',
+    settings.scripts.dist + '/modules',
+    settings.styles.dist + '/_*'
+  ])
+  .pipe(clean({ force: true, read: false }));
+});
+
 // ------------------------------------------------------------------------
 // watch
 // ------------------------------------------------------------------------
@@ -190,7 +239,7 @@ gulp.task('watch', function() {
   gulp.watch(settings.styles.valid_tree, ['styles'])
     .on('change', livereload.changed);
 
-  gulp.watch(settings.scripts.valid_tree)
+  gulp.watch(settings.scripts.valid_tree, ['copy'])
     .on('change', livereload.changed);
 });
 
@@ -198,7 +247,6 @@ gulp.task('watch', function() {
 // ------------------------------------------------------------------------
 // default
 // ------------------------------------------------------------------------
-gulp.task('demo', function() {
-});
-
 gulp.task('default', ['templates', 'styles', 'server']);
+
+gulp.task('deploy', ['templates', 'styles', 'requirejs']);

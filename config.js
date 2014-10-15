@@ -4,7 +4,7 @@ var path = require('path');
 module.exports = {
   MC_API_KEY: '',
 
-  env: '',
+  env: 'jinja',
 
   STATIC_PATH: '/static/',
 
