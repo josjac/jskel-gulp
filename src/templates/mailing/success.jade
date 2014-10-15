@@ -1,0 +1,8 @@
+link( href=handler.static_url('styles/mailing.css'), rel='stylesheet', type='text/css', media='all' )
+
+style( style='type/text' ).
+  #{handler.getFile(settings.styles.dist + '/mailing.css')}
+
+table
+  tr
+    td Ocurri&oacute; un problema, se&ntilde;or &ntilde;and&uacute;

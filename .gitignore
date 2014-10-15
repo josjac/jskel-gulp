@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+.git
+Thumbs*
+*.pyc
+local_settings.py
