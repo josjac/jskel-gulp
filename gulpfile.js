@@ -141,14 +141,24 @@ gulp.task('styles', function() {
 
   var tree = settings.styles.valid_tree;
 
+  function condition(file) {
+    if (file.relative.indexOf('/_') !== -1 || file.relative.indexOf('_') === 0) {
+      return false;
+    }
+
+    else {
+      return true;
+    }
+  }
+
   if (yargs.prod) {
     tree = settings.styles.tree;
   }
 
   gulp.src(tree)
-  .pipe(stylus(opt))
-  .pipe(csso())
-  .pipe(gulp.dest(settings.styles.dist));
+  .pipe(gulpif(condition, stylus(opt)))
+  .pipe(gulpif(condition, csso()))
+  .pipe(gulpif(condition, gulp.dest(settings.styles.dist)));
 });
 
 // ------------------------------------------------------------------------
@@ -247,6 +257,6 @@ gulp.task('watch', function() {
 // ------------------------------------------------------------------------
 // default
 // ------------------------------------------------------------------------
-gulp.task('default', ['templates', 'styles', 'server']);
+gulp.task('default', ['templates', 'styles', 'copy']);
 
 gulp.task('deploy', ['templates', 'styles', 'requirejs']);
