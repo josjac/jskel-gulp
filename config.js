@@ -21,9 +21,7 @@ module.exports = {
 
     if (this.env === 'jinja') {
       return "{{ handler.static_url('" + uri + "') }}";
-    }
-
-    else {
+    } else {
       r = this.relative();
 
       if (r !== '') {
@@ -47,10 +45,12 @@ module.exports = {
   },
 
   getFile: function(uri) {
-    return fs.readFileSync(__dirname + '/' + uri, { encoding: 'utf-8' });
+    return fs.readFileSync(__dirname + '/' + uri, {
+      encoding: 'utf-8'
+    });
   },
 
-  relative: function() { 
+  relative: function() {
     return path.relative(path.dirname(this.FILE_DEST), this.DEST);
   },
 

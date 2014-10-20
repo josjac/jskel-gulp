@@ -1,23 +1,23 @@
 var gulp = require('gulp'),
-    gulpif = require('gulp-if'),
-    gutil = require('gulp-util'),
-    clean = require('gulp-clean'),
-    copy = require('gulp-copy'),
-    stylus = require('gulp-stylus'),
-    nib = require('nib'),
-    csso = require('gulp-csso'),
-    uglify = require('gulp-uglify'),
-    jade = require('gulp-jade'),
-    htmlMin = require('gulp-minify-html'),
-    sprite = require('css-sprite').stream,
-    livereload = require('gulp-livereload'),
-    inlineCss = require('gulp-mc-inline-css'),
-    concat = require('gulp-concat'),
-    requirejs = require('requirejs'),
-    serveStatic = require('serve-static'),
-    connect = require('connect'),
-    yargs = require('yargs').argv,
-    path = require('path');
+  gulpif = require('gulp-if'),
+  gutil = require('gulp-util'),
+  clean = require('gulp-clean'),
+  copy = require('gulp-copy'),
+  stylus = require('gulp-stylus'),
+  nib = require('nib'),
+  csso = require('gulp-csso'),
+  uglify = require('gulp-uglify'),
+  jade = require('gulp-jade'),
+  htmlMin = require('gulp-minify-html'),
+  sprite = require('css-sprite').stream,
+  livereload = require('gulp-livereload'),
+  inlineCss = require('gulp-mc-inline-css'),
+  concat = require('gulp-concat'),
+  requirejs = require('requirejs'),
+  serveStatic = require('serve-static'),
+  connect = require('connect'),
+  yargs = require('yargs').argv,
+  path = require('path');
 
 var config = require('./config.js');
 config.argv = yargs;
@@ -37,41 +37,43 @@ function add(name, config) {
 
   var item = '';
 
-  self.src = config.src;
+  self.src = root.src + config.src;
 
-  self.dist = config.dist || config.src;
+  self.dist = root.dist + config.dist;
 
   self.tree = [];
 
   for (item in config) {
-    if (item !== 'tree' && item.indexOf('tree') !== -1 && typeof config[item] === 'object') {
+    if (
+      item !== 'tree' &&
+      item.indexOf('tree') !== -1 &&
+      typeof config[item] === 'object'
+    ) {
       self[item] = [];
       i = 0;
       for (; i < config[item].length; ++i) {
         self[item].push(
-          ((item === 'invalid_tree')? '!' : '') +
+          ((item === 'invalid_tree') ? '!' : '') +
           self.src + config[item][i]
         );
       }
 
       self.tree = self.tree.concat(self[item]);
-    }
-
-    else if (item !== 'src' && item !== 'dist' && item !== 'tree') {
+    } else if (item !== 'src' && item !== 'dist' && item !== 'tree') {
       self[item] = config[item];
     }
   }
 }
 
 function spriteConfigure(name) {
-  gulp.src(settings.sprites.src + '/' + name +'/*.png')
-  .pipe(sprite({
-    name: name,
-    style: name + '.styl',
-    cssPath: '../sprites',
-    processor: 'stylus'
-  }))
-  .pipe(gulpif('*.png', gulp.dest(settings.sprites.dist), gulp.dest(settings.styles.src)));
+  gulp.src(settings.sprites.src + '/' + name + '/*.png')
+    .pipe(sprite({
+      name: name,
+      style: name + '.styl',
+      cssPath: '../sprites',
+      processor: 'stylus'
+    }))
+    .pipe(gulpif('*.png', gulp.dest(settings.sprites.dist), gulp.dest(settings.sprites.src)));
 }
 
 
@@ -79,13 +81,16 @@ function spriteConfigure(name) {
 // config templates
 // ------------------------------------------------------------------------
 settings.add('templates', {
-  src: './src/templates',
-  dist: '../templates',
-  valid_tree: [ '/*.jade', '/**/*.jade' ],
-  invalid_tree: [ '/_*.jade', '/**/_*.jade', '/_**/*.jade' ],
+  src: '/templates',
+  dist: '',
+  valid_tree: ['/*.jade', '/**/*.jade'],
+  invalid_tree: ['/_*.jade', '/**/_*.jade', '/_**/*.jade'],
   options: {
-    locals: { handler: config, settings: settings },
-    pretty: (yargs.prod)? false : true
+    locals: {
+      handler: config,
+      settings: settings
+    },
+    pretty: (yargs.prod) ? false : true
   }
 });
 
@@ -94,29 +99,29 @@ settings.add('templates', {
 // config sprites
 // ------------------------------------------------------------------------
 settings.add('sprites', {
-  src: './src/static/sprites',
-  dist: '../static/sprites',
-  valid_tree: ['core']
+  src: '/static/sprites',
+  dist: '/static/sprites',
+  sprites_folders: ['core']
 });
 
 // ------------------------------------------------------------------------
 // config styles
 // ------------------------------------------------------------------------
 settings.add('styles', {
-  src: './src/static/styles',
-  dist: '../static/styles',
-  valid_tree: [ '/*.styl', '/**/*.styl' ],
-  invalid_tree: [ '/modules/*.styl', '/_**/*.styl' ]
+  src: '/static/styles',
+  dist: '/static/styles',
+  valid_tree: ['/*.styl', '/**/*.styl'],
+  invalid_tree: ['/modules/*.styl', '/_**/*.styl']
 });
 
 // ------------------------------------------------------------------------
 // config scripts
 // ------------------------------------------------------------------------
 settings.add('scripts', {
-  src: './src/static/scripts',
-  dist: '../static/scripts',
+  src: '/static/scripts',
+  dist: '/static/scripts',
   compile_tree: ['/*.js'],
-  valid_tree: [ '/*.js', '/modules/*.js', '/configs/*.js' ],
+  valid_tree: ['/*.js', '/modules/*.js', '/configs/*.js'],
   invalid_tree: []
 });
 
@@ -126,8 +131,8 @@ settings.add('scripts', {
 // ------------------------------------------------------------------------
 gulp.task('templates', function() {
   gulp.src(settings.templates.tree)
-  .pipe(jade(settings.templates.options))
-  .pipe(gulp.dest(settings.templates.dist));
+    .pipe(jade(settings.templates.options))
+    .pipe(gulp.dest(settings.templates.dist));
 });
 
 // ------------------------------------------------------------------------
@@ -144,9 +149,7 @@ gulp.task('styles', function() {
   function condition(file) {
     if (file.relative.indexOf('/_') !== -1 || file.relative.indexOf('_') === 0) {
       return false;
-    }
-
-    else {
+    } else {
       return true;
     }
   }
@@ -156,32 +159,32 @@ gulp.task('styles', function() {
   }
 
   gulp.src(tree)
-  .pipe(gulpif(condition, stylus(opt)))
-  .pipe(gulpif(condition, csso()))
-  .pipe(gulpif(condition, gulp.dest(settings.styles.dist)));
+    .pipe(gulpif(condition, stylus(opt)))
+    .pipe(gulpif(condition, csso()))
+    .pipe(gulpif(condition, gulp.dest(settings.styles.dist)));
 });
 
 // ------------------------------------------------------------------------
 // sprites task
 // ------------------------------------------------------------------------
-gulp.task('sprites', function() { 
-  var item = '';
+gulp.task('sprites:icons', function() {
+  var item = 0;
 
-  for (item in settings.sprites.valid_tree) {
-    spriteConfigure(item);
+  for (item in settings.sprites.sprites_folders) {
+    spriteConfigure(settings.sprites.sprites_folders[item]);
   }
 });
 
-gulp.task('sprites_build', ['sprites', 'styles']);
+gulp.task('sprites', ['sprites:icons', 'styles']);
 
 // ------------------------------------------------------------------------
 // inlinecss
 // ------------------------------------------------------------------------
 gulp.task('mailing', function() {
   gulp.src('./dist/mailing/*.html')
-  .pipe(inlineCss(config.MC_API_KEY))
-  .pipe(gulpif(yargs.prod, htmlMin()))
-  .pipe(gulp.dest('./dist/mailing'));
+    .pipe(inlineCss(config.MC_API_KEY))
+    .pipe(gulpif(yargs.prod, htmlMin()))
+    .pipe(gulp.dest('./dist/mailing'));
 });
 
 // ------------------------------------------------------------------------
@@ -194,6 +197,8 @@ gulp.task('server', function() {
   var app = connect();
 
   app.use('/static/scripts', serveStatic(path.resolve(settings.scripts.src)));
+  app.use('/static/typos', serveStatic(path.resolve(settings.src + '/static/typos')));
+  app.use('/static/images', serveStatic(path.resolve(settings.src + '/static/images')));
   app.use('/', serveStatic(path.resolve(settings.dist)));
 
   app.listen(port, host);
@@ -204,8 +209,14 @@ gulp.task('server', function() {
 // Todo a copiar
 // ------------------------------------------------------------------------
 gulp.task('copy', function() {
-  gulp.src('./src/static/scripts/**')
-  .pipe(gulp.dest(settings.scripts.dist));
+  gulp.src(settings.scripts.src + '/**')
+    .pipe(gulp.dest(settings.scripts.dist));
+
+  gulp.src(settings.src + '/static/images/**')
+    .pipe(gulp.dest(settings.dist + '/static/images'));
+
+  gulp.src(settings.src + '/static/typos/**')
+    .pipe(gulp.dest(settings.dist + '/static/typos'));
 });
 
 // ------------------------------------------------------------------------
@@ -213,13 +224,13 @@ gulp.task('copy', function() {
 // ------------------------------------------------------------------------
 gulp.task('requirejs', function() {
   requirejs.optimize({
-    baseUrl: './src/static/scripts/',
-    mainConfigFile: './src/static/scripts/configs/require.js',
+    baseUrl: settings.scripts.src,
+    mainConfigFile: settings.scripts.src + '/configs/require.js',
     preserveLicenseComments: false,
     wrap: true,
     name: 'libs/almond/almond',
-    include: [ 'main' ],
-    insertRequire: [ 'main' ],
+    include: ['main'],
+    insertRequire: ['main'],
     out: settings.scripts.dist + '/main.js'
   });
 });
@@ -229,12 +240,15 @@ gulp.task('requirejs', function() {
 // ------------------------------------------------------------------------
 gulp.task('clean', function() {
   gulp.src([
-    settings.scripts.dist + '/configs',
-    settings.scripts.dist + '/libs',
-    settings.scripts.dist + '/modules',
-    settings.styles.dist + '/_*'
-  ])
-  .pipe(clean({ force: true, read: false }));
+      settings.scripts.dist + '/configs',
+      settings.scripts.dist + '/libs',
+      settings.scripts.dist + '/modules',
+      settings.styles.dist + '/_*'
+    ])
+    .pipe(clean({
+      force: true,
+      read: false
+    }));
 });
 
 // ------------------------------------------------------------------------
