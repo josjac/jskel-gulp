@@ -1,10 +1,13 @@
+var jade = require('gulp-jade');
+
 var fs = require('fs');
+
 var path = require('path');
 
-module.exports = {
+var handler = {
   MC_API_KEY: '',
 
-  env: 'jinja',
+  env: '',
 
   STATIC_PATH: '/static/',
 
@@ -62,4 +65,26 @@ module.exports = {
 
     return {};
   }
+};
+
+module.exports = function(gulp, config) {
+
+  console.log(config.files);
+
+  gulp.task('templates', function() {
+
+    console.log('templates', config.files);
+
+    gulp.src(config.files)
+    .pipe(jade({
+     options: {
+        locals: {
+          handler: handler
+        },
+        pretty: (config.yargs.prod) ? false : true
+      }
+    }))
+    .pipe(gulp.dest(config.build_path));
+  });
+
 };
