@@ -1,5 +1,7 @@
 var path = require('path');
 
+var inlineCss = require('gulp-mc-inline-css');
+
 var MC_API_KEY = '';
 
 module.exports = function(gulp, config) {
