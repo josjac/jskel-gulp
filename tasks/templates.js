@@ -5,8 +5,6 @@ var fs = require('fs');
 var path = require('path');
 
 var handler = {
-  MC_API_KEY: '',
-
   env: '',
 
   STATIC_PATH: '/static/',

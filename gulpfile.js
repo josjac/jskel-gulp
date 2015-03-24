@@ -26,3 +26,17 @@ require('./tasks/sprites')(gulp, merge(false, project, {
   src_path: path.join(project.src_path, 'static', 'sprites'),
   build_path: path.join(project.build_path, 'static', 'sprites')
 }));
+
+require('./tasks/scripts')(gulp, merge(false, project, {
+  src_path: path.join(project.src_path, 'static', 'scripts'),
+  build_path: path.join(project.build_path, 'static', 'scripts'),
+  files: path.join(project.src_path, 'static', 'scripts','*.js')
+}));
+
+require('./tasks/server')(gulp, merge(false, project));
+
+require('./tasks/copy')(gulp, merge(false, project));
+
+require('./tasks/mailing')(gulp, merge(false, project));
+
+require('./tasks/watch')(gulp, merge(false, project));
