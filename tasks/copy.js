@@ -3,7 +3,7 @@ var path = require('path');
 module.exports = function(gulp, config) {
 
   gulp.task('copy', function() {
-    gulp.src(path.join(config.src_path, 'static', 'scripts', '**'))
+    gulp.src(config.scripts.files)
       .pipe(gulp.dest(path.join(config.build_path, 'static', 'scripts')));
 
     gulp.src(path.join(config.src_path, 'static', 'images', '**'))

@@ -13,30 +13,42 @@ var project = {
   yargs: require('yargs').argv
 };
 
-require('./tasks/templates')(gulp, merge(false, project, {
+project.templates = {
   files: path.join(project.src_path, 'templates','**', '*.jade')
-}));
+};
 
-require('./tasks/styles')(gulp, merge(false, project, {
+project.styles = {
   files: path.join(project.src_path, 'static', 'styles','*.styl'),
   build_path: path.join(project.build_path, 'static', 'styles')
-}));
+};
 
-require('./tasks/sprites')(gulp, merge(false, project, {
+project.sprites = {
   src_path: path.join(project.src_path, 'static', 'sprites'),
   build_path: path.join(project.build_path, 'static', 'sprites')
-}));
+};
 
-require('./tasks/scripts')(gulp, merge(false, project, {
+project.scripts = {
   src_path: path.join(project.src_path, 'static', 'scripts'),
   build_path: path.join(project.build_path, 'static', 'scripts'),
   files: path.join(project.src_path, 'static', 'scripts','*.js')
-}));
+};
 
-require('./tasks/server')(gulp, merge(false, project));
+project.mailing = {
+  files: path.join(project.build_path, 'mailing', '*.html')
+};
 
-require('./tasks/copy')(gulp, merge(false, project));
+require('./tasks/templates')(gulp, merge(false, project, project.templates));
 
-require('./tasks/mailing')(gulp, merge(false, project));
+require('./tasks/styles')(gulp, merge(false, project, project.styles));
 
-require('./tasks/watch')(gulp, merge(false, project));
+require('./tasks/sprites')(gulp, merge(false, project, project.sprites));
+
+require('./tasks/scripts')(gulp, merge(false, project, project.scripts));
+
+require('./tasks/mailing')(gulp, merge(false, project, project.mailing));
+
+require('./tasks/server')(gulp, project);
+
+require('./tasks/copy')(gulp, project);
+
+require('./tasks/watch')(gulp, project);

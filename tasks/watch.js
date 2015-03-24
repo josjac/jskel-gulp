@@ -6,13 +6,10 @@ module.exports = function(gulp, config) {
   gulp.task('watch', function() {
     livereload.listen();
 
-    gulp.watch(path.join(config.base_path, 'templates'), ['templates'])
+    gulp.watch(config.templates.files, ['templates'])
       .on('change', livereload.changed);
 
-    gulp.watch(path.join(config.base_path, 'static', 'styles'), ['styles'])
+    gulp.watch(config.styles.files, ['styles'])
       .on('change', livereload.changed);
-
-    //gulp.watch(path.join(config.base_path, 'static', 'scripts'), ['copy'])
-      //.on('change', livereload.changed);
   });
 };

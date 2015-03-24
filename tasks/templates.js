@@ -4,6 +4,8 @@ var fs = require('fs');
 
 var path = require('path');
 
+var gulpif = require('gulp-if');
+
 var handler = {
   env: '',
 
@@ -65,6 +67,14 @@ var handler = {
   }
 };
 
+function condition(file) {
+  if (file.relative.indexOf('/_') !== -1 || file.relative.indexOf('_') === 0) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 module.exports = function(gulp, config) {
 
   gulp.task('templates', function() {
@@ -77,7 +87,7 @@ module.exports = function(gulp, config) {
           pretty: (config.yargs.prod) ? false : true
         }
       }))
-      .pipe(gulp.dest(config.build_path));
+      .pipe(gulpif(condition, gulp.dest(config.build_path)));
   });
 
 };
