@@ -1,1 +1,9 @@
-h1 Hola mundo
+html
+  head
+    title 
+    link( href!=handler.static_url('styles/main.css'), rel='stylesheet', type='text/css' )
+
+  body
+    #wrap
+      block main
+        h1 Hola mundo

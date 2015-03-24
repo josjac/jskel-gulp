@@ -69,22 +69,17 @@ var handler = {
 
 module.exports = function(gulp, config) {
 
-  console.log(config.files);
-
   gulp.task('templates', function() {
-
-    console.log('templates', config.files);
-
     gulp.src(config.files)
-    .pipe(jade({
-     options: {
+      .pipe(jade({
         locals: {
           handler: handler
         },
-        pretty: (config.yargs.prod) ? false : true
-      }
-    }))
-    .pipe(gulp.dest(config.build_path));
+        options: {
+          pretty: (config.yargs.prod) ? false : true
+        }
+      }))
+      .pipe(gulp.dest(config.build_path));
   });
 
 };

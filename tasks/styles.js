@@ -2,7 +2,7 @@ var stylus = require('gulp-stylus');
 
 var nib = require('nib');
 
-var csso = require('csso');
+var csso = require('gulp-csso');
 
 var gulpif = require('gulp-if');
 

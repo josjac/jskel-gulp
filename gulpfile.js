@@ -14,9 +14,15 @@ var project = {
 };
 
 require('./tasks/templates')(gulp, merge(false, project, {
-  files: project.src_path + '/templates/**/*.jade'
+  files: path.join(project.src_path, 'templates','**', '*.jade')
 }));
 
 require('./tasks/styles')(gulp, merge(false, project, {
-  files: project.src_path + '/static/styles/*.styl'
+  files: path.join(project.src_path, 'static', 'styles','*.styl'),
+  build_path: path.join(project.build_path, 'static', 'styles')
+}));
+
+require('./tasks/sprites')(gulp, merge(false, project, {
+  src_path: path.join(project.src_path, 'static', 'sprites'),
+  build_path: path.join(project.build_path, 'static', 'sprites')
 }));
