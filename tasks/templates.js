@@ -78,6 +78,8 @@ function condition(file) {
 module.exports = function(gulp, config) {
 
   gulp.task('templates', function() {
+    handler.argv = config.yargs;
+
     gulp.src(config.files)
       .pipe(jade({
         locals: {

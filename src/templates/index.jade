@@ -1,4 +1,4 @@
 extend _base
 
 block javascript
-  script( src!=handler.static_url('scripts/main.js') )
+  +requireTagConfig('scripts/main.js')
