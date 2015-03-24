@@ -18,7 +18,7 @@ project.templates = {
 };
 
 project.styles = {
-  files: path.join(project.src_path, 'static', 'styles','*.styl'),
+  files: path.join(project.src_path, 'static', 'styles','**', '*.styl'),
   build_path: path.join(project.build_path, 'static', 'styles')
 };
 

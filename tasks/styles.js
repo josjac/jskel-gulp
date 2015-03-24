@@ -7,13 +7,12 @@ var csso = require('gulp-csso');
 var gulpif = require('gulp-if');
 
 function condition(file) {
-  if (file.relative.indexOf('/_') !== -1 || file.relative.indexOf('_') === 0) {
-    return false;
-  } else {
+  if (file.relative.indexOf('/') === -1) {
     return true;
+  } else {
+    return false;
   }
 }
-
 
 module.exports = function(gulp, config) {
   gulp.task('styles', function() {
