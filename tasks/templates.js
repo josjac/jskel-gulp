@@ -85,9 +85,7 @@ module.exports = function(gulp, config) {
         locals: {
           handler: handler
         },
-        options: {
-          pretty: (config.yargs.prod) ? false : true
-        }
+        pretty: (config.yargs.prod) ? false : true
       }))
       .pipe(gulpif(condition, gulp.dest(config.build_path)));
   });

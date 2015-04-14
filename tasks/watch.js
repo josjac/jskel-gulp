@@ -21,6 +21,9 @@ module.exports = function(gulp, config) {
     gulp.watch(config.styles.files, ['styles'])
       .on('change', changed);
 
+    gulp.watch(config.scripts.src_path + '/**', ['copy:scripts'])
+      .on('change', changed);
+
     gulp.watch(config.scripts.src_path + '/**')
       .on('change', changed);
   });

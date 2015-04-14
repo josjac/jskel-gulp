@@ -52,3 +52,10 @@ require('./tasks/server')(gulp, project);
 require('./tasks/copy')(gulp, project);
 
 require('./tasks/watch')(gulp, project);
+
+if (project.yargs.prod) {
+  gulp.task('deploy', ['templates', 'sprites', 'copy:compile', 'scripts']);
+}
+else {
+  gulp.task('deploy', ['templates', 'sprites', 'copy']);
+}
