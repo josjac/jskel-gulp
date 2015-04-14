@@ -33,6 +33,6 @@ module.exports = function(gulp, config) {
     //https.createServer(options, app).listen(port, host);
 
     // normal
-    app.listn(port, host);
+    app.listen(port, host);
   });
 };
