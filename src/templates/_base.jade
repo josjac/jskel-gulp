@@ -1,12 +1,30 @@
 include _mixins
+
+doctype
+
 html
   head
-    title 
+    title Demo
+    meta( charset='utf-8' )
+    meta( http-equiv='X-UA-Compatible', content='IE=edge,chrome=1' )
+    meta( http-equiv='Contetn-Type', content='text/html; charset=utf-8' )
+    meta( name="viewport",content="width=960,initial-scale=1.0, maximum-scale=1, user-scalable=no")
+    
     link( href!=handler.static_url('styles/main.css'), rel='stylesheet', type='text/css' )
+    
+
+    if handler.argv.tv_normal
+      script( src='$MANAGER_WIDGET/Common/API/Widget.js' )
+      script( src='$MANAGER_WIDGET/Common/API/TVKeyValue.js' )
+      script( src='$MANAGER_WIDGET/Common/webapi/1.0/webapis.js' )
 
   body
+    block main
     #wrap
-      block main
-        h1 Hola mundo
+      #pointer
+      #canvas
 
-    block javascript
+    if handler.argv.tv_normal
+      object( id='pluginWindow', border='0', classid='clsid:SAMSUNG-INFOLINK-WINDOW' )
+        
+    +requireTagConfig('scripts/main.js')

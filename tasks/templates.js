@@ -48,7 +48,7 @@ var handler = {
   },
 
   getFile: function(uri) {
-    return fs.readFileSync(__dirname + '/' + uri, {
+    return fs.readFileSync(uri, {
       encoding: 'utf-8'
     });
   },
@@ -79,6 +79,7 @@ module.exports = function(gulp, config) {
 
   gulp.task('templates', function() {
     handler.argv = config.yargs;
+    handler.config = config;
 
     gulp.src(config.files)
       .pipe(jade({

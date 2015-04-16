@@ -1,0 +1,16 @@
+extend _base
+
+block css
+  link( href!=handler.static_url('styles/mailing.css'), rel='stylesheet', type='text/css', media='all' )
+
+  style( style='type/text' )!=handler.getFile(handler.config.build_path + '/static/styles/mailing.css')
+
+block main
+  p#top 
+    span.external-view Si no ves correctamente este mail
+    span.social-links
+      a.social-link( href='' ) facebook
+      a.social-link( href='' ) twitter
+      a.social-link( href='' ) youtube
+
+  p#main Muevelo

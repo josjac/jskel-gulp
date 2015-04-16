@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<rsp stat="ok">
+<list>
+<widget id="__app_id__">
+<title>__app_name__</title>
+<compression size="__app_size__" type="zip"/>
+<description>__app_name__</description>
+<download>http://10.0.0.136/__app_id___1.000_Others___date__.zip</download>
+</widget>
+</list>
+</rsp>

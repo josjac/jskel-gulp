@@ -1,0 +1,33 @@
+_font_default = 'Trebuchet MS', Helvetica, sans-serif
+_font_safe = Verdana, Geneva, sans-serif;
+
+_verde = #008b60
+_oscuro = #2f2f2f
+
+.font-default
+  font-family _font_default
+
+.font-safe
+  font-family _font_safe
+
+html,
+body
+  margin 0
+  padding 0
+  background #FFF
+  text-align center
+
+table
+  text-align left
+
+  td
+    @extend .font-default
+    color #6D6E71
+    font-size 12px
+    text-align center
+
+  img
+    border none
+
+a
+  color #006DB7

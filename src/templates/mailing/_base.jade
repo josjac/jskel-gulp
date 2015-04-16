@@ -1,0 +1,12 @@
+html( style='margin: 0; padding: 0' )
+  - var custom = {}
+  block variables
+
+  head
+    block css
+    
+  body
+    table#m_wrap( cellpadding='0', cellspacing='0', border='0', align='center' )
+      tr
+        td#m_wrap_inner
+          block main

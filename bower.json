@@ -1,6 +1,6 @@
 {
-  "name": "frotend",
-  "version": "0.0.0",
+  "name": "jskel-gulp",
+  "version": "0.0.3",
   "authors": [
     "Jose Ayon <jayon@funciton.com>"
   ],
@@ -20,6 +20,8 @@
   ],
   "dependencies": {
     "requirejs": "~2.1.16",
-    "almond": "~0.3.0"
+    "almond": "~0.3.0",
+    "gsap": "~1.16.1"
   }
 }
+

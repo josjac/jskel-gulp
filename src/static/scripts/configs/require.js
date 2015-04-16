@@ -1,5 +1,5 @@
 require.config({
-  baseUrl: '/static/scripts',
+  baseUrl: 'static/scripts',
   paths: {},
   deps: []
 });

@@ -2,6 +2,10 @@ var path = require('path');
 
 var inlineCss = require('gulp-mc-inline-css');
 
+var htmlMin = require('gulp-htmlmin');
+
+var gulpif = require('gulp-if');
+
 var MC_API_KEY = '';
 
 module.exports = function(gulp, config) {

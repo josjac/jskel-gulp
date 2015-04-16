@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<widget>
+  <cpname itemtype="string">__app_name__</cpname>
+	<cplogo itemtype="string"></cplogo>
+	<cpauthjs itemtype="string"></cpauthjs>
+
+	<ThumbIcon itemtype="string">icon/default_106.png</ThumbIcon>
+	<BigThumbIcon itemtype="string">icon/default_115.png</BigThumbIcon>
+	<ListIcon itemtype="string">icon/default_85.png</ListIcon>
+	<BigListIcon itemtype="string">icon/default_95.png</BigListIcon>
+
+	<category itemtype="string"></category>
+	<autoUpdate itemtype="boolean">n</autoUpdate>
+
+	<ver itemtype="string">1.000</ver>
+	<mgrver itemtype="string"></mgrver>
+
+	<fullwidget itemtype="boolean">y</fullwidget>
+	<type itemtype="string">user</type>
+
+	<srcctl itemtype="boolean">y</srcctl>
+	<ticker itemtype="boolean">n</ticker>
+	<childlock itemtype="boolean">n</childlock>
+	<videomute itemtype="boolean">n</videomute>
+	<audiomute itemtype="boolean">n</audiomute>
+
+	<dcont itemtype="boolean">y</dcont>
+	<mouse itemtype="boolean">y</mouse>
+
+	<widgetname itemtype="string">__app_name__</widgetname>
+	<description itemtype="string"></description>
+
+	<width itemtype="string">960</width>
+	<height itemtype="string">540</height>
+
+  <network itemtype="string">n</network>
+
+	<author itemtype="group"> 
+		<name itemtype="string">funciton</name>
+		<email itemtype="string">info@funciton.com</email>
+    <link itemtype="string">http://funciton.com</link>
+		<organization itemtype="string">funciton</organization>
+	</author>
+</widget>

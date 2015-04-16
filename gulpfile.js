@@ -8,10 +8,18 @@ var merge = require('node.extend');
 
 var project = {
   base_path: __dirname,
-  build_path: path.join(__dirname, 'build'),
+  build_path: path.join(__dirname, 'build', 'web'),
   src_path: path.join(__dirname, 'src'),
   yargs: require('yargs').argv
 };
+
+if (project.yargs.tv_normal) {
+  project.build_path = path.join(__dirname, 'build', 'tv_normal');
+}
+
+else if (project.yargs.tv_tizen) {
+  project.build_path = path.join(__dirname, 'build', 'tv_tizen');
+}
 
 project.templates = {
   files: path.join(project.src_path, 'templates','**', '*.jade')
@@ -52,6 +60,8 @@ require('./tasks/server')(gulp, project);
 require('./tasks/copy')(gulp, project);
 
 require('./tasks/watch')(gulp, project);
+
+require('./tasks/package')(gulp, project);
 
 if (project.yargs.prod) {
   gulp.task('deploy', ['templates', 'sprites', 'copy:compile', 'scripts']);
