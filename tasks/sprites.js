@@ -21,7 +21,7 @@ module.exports = function(gulp, config) {
         .pipe(sprite({
           name: directory,
           style: directory + '.styl',
-          cssPath: '../sprites',
+          cssPath: '../sprites/',
           processor: 'stylus'
         }))
         .pipe(gulpif('*.png', gulp.dest(config.build_path), gulp.dest(config.src_path)));
