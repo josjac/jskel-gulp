@@ -13,7 +13,9 @@ function changed() {
 
 module.exports = function(gulp, config) {
   gulp.task('watch', function() {
-    livereload.listen();
+    livereload.listen({
+      port: config.yargs.port || 35729
+    });
 
     gulp.watch(config.templates.files, ['templates'])
       .on('change', changed);

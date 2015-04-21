@@ -10,8 +10,8 @@ var fs = require('fs');
 
 module.exports = function(gulp, config) {
   gulp.task('server', function() {
-    var port = 8000;
-    var host = '0.0.0.0';
+    var port = config.yargs.port || 8000;
+    var host = config.yargs.host || '0.0.0.0';
 
     var app = connect();
 
