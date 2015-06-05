@@ -26,7 +26,10 @@ module.exports = function(gulp, config) {
     gulp.watch(config.scripts.src_path + '/**', ['copy:scripts'])
       .on('change', changed);
 
-    gulp.watch(config.scripts.src_path + '/**')
+    gulp.watch([
+      '!' + config.scripts.src_path + '/libs',
+      config.scripts.src_path + '/**/*.js'
+    ])
       .on('change', changed);
   });
 };

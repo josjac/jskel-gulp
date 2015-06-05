@@ -11,7 +11,7 @@ module.exports = function(gulp, config) {
           preserveLicenseComments: false,
           wrap: true,
           name: 'libs/almond/almond',
-          insertRequire: [file.relative]
+          include: [file.relative]
         };
       }))
       .pipe(gulp.dest(config.build_path));

@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="http://elcomercio.pe/tv/tizen" version="1.0.0" viewmodes="maximized">
-    <tizen:application id="OxdC6Iumuf.__app_id__" package="OxdC6Iumuf" required_version="2.3"/>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="__app_url_id__" version="__app_version__" viewmodes="maximized">
+    <access origin="*" subdomains="true"></access>
+    <tizen:application id="OxdC6Iumuf.__app_id__" package="OxdC6Iumuf" required_version="2.2"/>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <icon src="icon/icon.png"/>
     <name>__app_name__</name>
+    <tizen:privilege name="http://tizen.org/privilege/tv.audio"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.channel"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.display"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.inputdevice"/>
+    <tizen:privilege name="http://tizen.org/privilege/tv.window"/>
     <tizen:profile name="tv"/>
+    <tizen:setting screen-orientation="landscape" background-support="disable" encryption="disable" hwkey-event="enable"/>
+    <tizen:metadata key="http://samsung.com/tv/metadata/multitasking.support" value="false"/>
 </widget>

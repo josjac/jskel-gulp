@@ -9,9 +9,11 @@ var path = require('path');
 var fs = require('fs');
 
 var info = {
-  name: 'aplication name',
-  id: 'aplication_name',
-  date: '15052015'
+  name: 'Nombre',
+  id: 'idapp',
+  date: '15052015',
+  url_id: 'http://appurl/smarttv',
+  version: '1.0.0'
 };
 
 module.exports = function(gulp, config) {
@@ -55,6 +57,8 @@ module.exports = function(gulp, config) {
         .pipe(gulp.dest(config.build_path));
 
       gulp.src(path.join(config.base_path, 'tv', 'tizen', 'config.xml'))
+        .pipe(replace(/__app_version__/g, info.version))
+        .pipe(replace(/__app_url_id__/g, info.url_id))
         .pipe(replace(/__app_name__/g, info.name))
         .pipe(replace(/__app_id__/g, info.id))
         .pipe(gulp.dest(config.build_path));
