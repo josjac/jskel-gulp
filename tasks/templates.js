@@ -1,5 +1,11 @@
 var jade = require('gulp-jade');
 
+var lodash_template = require('gulp-template');
+
+var amd_wrap = require('gulp-wrap-amd');
+
+var rename = require('gulp-rename');
+
 var fs = require('fs');
 
 var path = require('path');
@@ -9,7 +15,7 @@ var gulpif = require('gulp-if');
 var handler = {
   env: '',
 
-  STATIC_PATH: '/static/',
+  STATIC_PATH: 'static/',
 
   FILE_DEST: '',
 
@@ -89,6 +95,22 @@ module.exports = function(gulp, config) {
         pretty: (config.yargs.prod) ? false : true
       }))
       .pipe(gulpif(condition, gulp.dest(config.build_path)));
+
+    // ---------------------------------------------------------
+    // del lado del client
+    // ---------------------------------------------------------
+    gulp.src(config.clients)
+      .pipe(jade({
+        locals: {
+          handler: handler
+        }
+      }))
+      .pipe(lodash_template.precompile())
+      .pipe(amd_wrap())
+      .pipe(rename({
+        extname: '.js'
+      }))
+      .pipe(gulpif(condition, gulp.dest(config.clients_build_path)));
   });
 
 };

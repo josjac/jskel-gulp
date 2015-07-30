@@ -21,6 +21,7 @@
   "dependencies": {
     "requirejs": "~2.1.16",
     "almond": "~0.3.1",
-    "gsap": "~1.16.1"
+    "jquery": "~2",
+    "lodash": "~3.10.0"
   }
 }

@@ -14,15 +14,20 @@ var project = {
 };
 
 if (project.yargs.tv_normal) {
-  project.build_path = path.join(__dirname, 'build', 'tv_normal');
+  project.build_path = path.join(__dirname, 'build', 'normal');
 }
 
 else if (project.yargs.tv_tizen) {
-  project.build_path = path.join(__dirname, 'build', 'tv_tizen');
+  project.build_path = path.join(__dirname, 'build', 'tizen');
 }
 
 project.templates = {
-  files: path.join(project.src_path, 'templates','**', '*.jade')
+  files: [
+    '!' + path.join(project.src_path, 'templates','client', '**'),
+    path.join(project.src_path, 'templates','**', '*.jade')
+  ],
+  clients: path.join(project.src_path, 'templates', 'client', '*.jade'),
+  clients_build_path: path.join(project.src_path, 'static', 'scripts', 'templates')
 };
 
 project.styles = {

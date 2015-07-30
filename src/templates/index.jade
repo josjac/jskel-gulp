@@ -1,1 +1,31 @@
-extend _base
+include _mixins
+block variables
+
+doctype
+
+html#html.no-js(lang='en')
+  head
+    title Trackpad
+    meta( charset='utf-8' )
+    meta( http-equiv='X-UA-Compatible', content='IE=edge,chrome=1' )
+    meta( http-equiv='Contetn-Type', content='text/html; charset=utf-8' )
+    meta( name="viewport",content="width=1920")
+
+    link( href=handler.static_url('styles/main.css'), rel='stylesheet', type='text/css', media='all' )
+
+    if handler.argv.tv_normal
+      script( src='$MANAGER_WIDGET/Common/API/Widget.js' )
+      script( src='$MANAGER_WIDGET/Common/API/TVKeyValue.js' )
+      script( src='$MANAGER_WIDGET/Common/webapi/1.0/webapis.js' )
+
+  body
+    #canvas
+
+    if handler.argv.tv_normal
+      object( id='pluginWindow', border='0', classid='clsid:SAMSUNG-INFOLINK-WINDOW' )
+
+    block javascript
+     +requireTagConfig('scripts/main.js')
+
+    script( src!="http://192.168.1.125:35729/livereload.js?ext=Chrome&extver=2.1.0" )
+

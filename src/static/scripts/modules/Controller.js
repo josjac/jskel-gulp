@@ -22,6 +22,9 @@ define([], function() {
     return this;
   }
 
+  function update() {
+  }
+
   function on() {
   }
 
@@ -29,7 +32,6 @@ define([], function() {
     // status 0, no activo o cerrado
     // status 1, activo o abierto
     this.status = 0;
-    return this;
   }
 
   Controller.prototype.open = open;
@@ -37,6 +39,8 @@ define([], function() {
   Controller.prototype.close = close;
 
   Controller.prototype.on = on;
+
+  Controller.prototype.update = update;
 
   return Controller;
 });

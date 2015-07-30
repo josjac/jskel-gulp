@@ -1,81 +1,47 @@
 require([
+  'modules/app',
+
   'modules/tv',
   'modules/Router',
-  'controllers/home',
-  'controllers/category',
+  'modules/Navigate',
 
+  'controllers/main'
+], function(
+  app,
+  
+  tv,
+  Router,
+  Navigate,
 
-  'modules/msf.pointer'
-  //'libs/gsap/src/minified/plugins/CSSPlugin.min',
-  //'libs/gsap/src/minified/TweenLite.min'
-], function(tv, Router, Home, Category) {
-  var app = {};
+  main
+) {
 
-  app.history = [];
+  localStorage.clear();
+
+  app.dom = {
+    canvas: document.getElementById('canvas')
+  };
+
+  //$('body').append('<div id="log"></div>');
+
+  app.log = function(txt, clear) {
+    //if (clear) {
+      //$('#log').html('');
+    //}
+    
+    //$('#log').append(txt);
+    //$('#log').append('<br/>');
+  };
+
+  app.tv = tv;
+
+  app.navigate = new Navigate();
 
   app.router = new Router({
-    '/home': new Home(),
-    '/category/(.*)': new Category()
+    '^$': main
   });
 
-  app.controller = 0;
-
-  function controllerManager() {
-    var next = app.router.get(location.hash);
-    var current = app.controller;
-    
-    next.open(function() {
-      // in
-      if (!current) {
-        //TweenLite.from(next.page, 0.8, { 
-          //transformOrigin: '50% 100%',
-          //transform: 'scale(1.2) rotateX(-90deg)',
-          //backgroundColor: '#000',
-          //ease: Linear.easeIn
-        //});
-      }
-
-      else {
-        current.close();
-        //TweenLite
-        //.to(current.page, 0.5, { 
-          //transformOrigin: '50% 100%',
-          //transform: 'rotateX(90deg)',
-          //opacity: 0,
-          //ease: Linear.easeOut
-        //});
-        //TweenLite
-        //.from(next.page, 0.8, { 
-          //transformOrigin: '50% 100%',
-          //transform: 'rotateX(-90deg)',
-          //backgroundColor: '#000',
-          //ease: Linear.easeIn,
-          //delay: 0.1,
-          //onComplete: function() {
-            //current.close();
-          //}
-        //});
-      }
-    });
-
-    app.controller = next;
-  }
-
-  window.addEventListener('hashchange', controllerManager);
-
-  // control de interface
-
-  // inica aplicacion
-  if (location.hash === '') {
-    location.hash = '#/home';
-  }
-  else {
-    window.dispatchEvent(new Event('hashchange'));
-  }
+  app.router.start();
 
   window.app = app;
-
-  if (typeof tv.widget.sendReadyEvent === 'function') {
-    tv.widget.sendReadyEvent();
-  }
 });
