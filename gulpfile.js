@@ -31,6 +31,7 @@ var project = {
   }
 };
 
+
 if (!project.yargs.prod) {
   project.host = '192.168.1.125';
   
@@ -85,6 +86,11 @@ project.scripts = {
 project.mailing = {
   files: path.join(project.build_path, 'mailing', '*.html')
 };
+
+try {
+  var local_settings = require('./local_settings.js')(project);
+  project = merge(false, project, local_settings);
+} catch(e) {}
 
 require('./tasks/templates')(gulp, merge(false, project, project.templates));
 
