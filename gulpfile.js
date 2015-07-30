@@ -10,8 +10,40 @@ var project = {
   base_path: __dirname,
   build_path: path.join(__dirname, 'build', 'web'),
   src_path: path.join(__dirname, 'src'),
-  yargs: require('yargs').argv
+  yargs: require('yargs').argv,
+  host: '',
+  static_path: 'static/',
+  livereload_url: '',
+  
+  getFile: function(uri) {
+    return fs.readFileSync(uri, {
+      encoding: 'utf-8'
+    });
+  },
+
+  getJSON: function(uri) {
+    var str = this.getFile(uri);
+    if (str) {
+      return JSON.parse(str);
+    }
+
+    return {};
+  }
 };
+
+if (!project.yargs.prod) {
+  project.host = '192.168.1.125';
+  
+  project.port = ':8000';
+  
+  project.livereload_url = [
+    'http://', project.host, ':35729/livereload.js?ext=Chrome&extver=2.1.0'
+  ].join('');
+
+  project.static_path = [
+    'http://', project.host, project.port, '/static/'
+  ].join('')
+}
 
 if (project.yargs.tv_normal) {
   project.build_path = path.join(__dirname, 'build', 'normal');
@@ -19,6 +51,10 @@ if (project.yargs.tv_normal) {
 
 else if (project.yargs.tv_tizen) {
   project.build_path = path.join(__dirname, 'build', 'tizen');
+}
+
+else if (project.yargs.prod) {
+  project.build_path = path.join(__dirname, 'build', 'webprod');
 }
 
 project.templates = {

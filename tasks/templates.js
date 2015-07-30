@@ -6,8 +6,6 @@ var amd_wrap = require('gulp-wrap-amd');
 
 var rename = require('gulp-rename');
 
-var fs = require('fs');
-
 var path = require('path');
 
 var gulpif = require('gulp-if');
@@ -15,7 +13,7 @@ var gulpif = require('gulp-if');
 var handler = {
   env: '',
 
-  STATIC_PATH: 'static/',
+  STATIC_PATH: '',
 
   FILE_DEST: '',
 
@@ -53,23 +51,8 @@ var handler = {
     return r + uri;
   },
 
-  getFile: function(uri) {
-    return fs.readFileSync(uri, {
-      encoding: 'utf-8'
-    });
-  },
-
   relative: function() {
     return path.relative(path.dirname(this.FILE_DEST), this.DEST);
-  },
-
-  getJSON: function(uri) {
-    var str = this.getFile(uri);
-    if (str) {
-      return JSON.parse(str);
-    }
-
-    return {};
   }
 };
 
@@ -86,6 +69,9 @@ module.exports = function(gulp, config) {
   gulp.task('templates', function() {
     handler.argv = config.yargs;
     handler.config = config;
+    handler.STATIC_PATH = config.static_path;
+    handler.getFile = config.getFile;
+    handler.getJSON = config.getJSON;
 
     gulp.src(config.files)
       .pipe(jade({

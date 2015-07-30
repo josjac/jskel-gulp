@@ -1,16 +1,15 @@
-require.config({
-  baseUrl: 'static/scripts',
-  paths: {
-    'jquery': 'libs/jquery/dist/jquery',
-    'lodash': 'libs/lodash/lodash',
-    'multiscreen': 'modules/multiscreen-smarttv-1.1.19.min'
+{
+  "paths": {
+    "jquery": "libs/jquery/dist/jquery",
+    "lodash": "libs/lodash/lodash",
+    "multiscreen": "modules/multiscreen-smarttv-1.1.19.min"
   },
-  deps: [
-    'jquery'
+  "deps": [
+    "jquery"
   ],
-  shim: {
-    'lodash': {
-      exports: '_'
+  "shim": {
+    "lodash": {
+      "exports": "_"
     }
   }
-});
+}

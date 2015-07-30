@@ -17,12 +17,11 @@ mixin requireTagConfig(url)
 
   else 
     script( src!=handler.static_url('scripts/libs/requirejs/require.js'), type='text/javascript' )
-    script( src!=handler.static_url('scripts/configs/require.js'), type='text/javascript' )
     script.
-      requirejs.config({
-        urlArgs: 'bust=' + (new Date()).getTime()
-      });
-    
-      require(['#{handler.static_url(url)}']);
-
-
+      (function() {
+        var config = !{handler.getFile([handler.config.src_path, '/static/scripts/configs/require.js'].join(''))};
+        config.baseUrl = '#{handler.config.static_path}scripts';
+        config.urlArgs = 'bust=' + (new Date()).getTime();
+        requirejs.config(config);
+        require(['#{handler.static_url(url)}']);
+      })()

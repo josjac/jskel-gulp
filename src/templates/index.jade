@@ -24,8 +24,11 @@ html#html.no-js(lang='en')
     if handler.argv.tv_normal
       object( id='pluginWindow', border='0', classid='clsid:SAMSUNG-INFOLINK-WINDOW' )
 
+    if !handler.argv.prod
+      script.
+        window.static_path = '#{handler.config.static_path}';
+        
+      script( src!=handler.config.livereload_url )
+
     block javascript
      +requireTagConfig('scripts/main.js')
-
-    script( src!="http://192.168.1.125:35729/livereload.js?ext=Chrome&extver=2.1.0" )
-
