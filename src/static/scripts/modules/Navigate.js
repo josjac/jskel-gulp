@@ -31,6 +31,11 @@ define([
         }
       } else if (typeof index_nav[key_name] === 'function') {
         index_nav[key_name]();
+        index_nav.trigger(key_name);
+      }
+
+      if (typeof index_nav.all === 'function') {
+        index_nav.all(key_name, key_code);
       }
 
       if (typeof index_nav.moveSelectedFrame === 'function') {
@@ -52,9 +57,17 @@ define([
 
   function setIndexNav(index_nav) {
     var self = this;
+    
+    if (this.index_nav && this.index_nav.id && index_nav && index_nav.id && this.index_nav.id === index_nav.id) {
+      return;
+    }
 
     if (this.index_nav && typeof this.index_nav.onInactive === 'function') {
       this.index_nav.onInactive();
+    }
+
+    if (this.index_nav && typeof this.index_nav.trigger === 'function') {
+      this.index_nav.trigger('inactive');
     }
 
     if (this.index_nav && typeof this.index_nav.showSelectedFrame === 'function') {
@@ -71,6 +84,10 @@ define([
       this.index_nav.onActive();
     }
 
+    if (this.index_nav && typeof this.index_nav.trigger === 'function') {
+      this.index_nav.trigger('active');
+    }
+
     if (this.index_nav && typeof this.index_nav.moveSelectedFrame === 'function') {
       this.index_nav.moveSelectedFrame(true);
       this.index_nav.showSelectedFrame('block');
@@ -84,8 +101,11 @@ define([
 
   function createNavChildConfig(view) {
     var self = this;
+    var id = 'nav' + new Date().getTime() + '' + Math.random();
 
     return _.extend({
+      id: id,
+
       enabled: 1,
 
       showSelectedFrame: function(display) {
@@ -181,6 +201,7 @@ define([
           this.trigger('left');
         } else {
           this.leaveLeft();
+          this.trigger('leaveLeft');
         }
       },
       right: function() {
@@ -196,6 +217,7 @@ define([
           this.trigger('right');
         } else {
           this.leaveRight();
+          this.trigger('leaveRight');
         }
       },
       top: function() {
@@ -211,6 +233,7 @@ define([
           this.trigger('top');
         } else {
           this.leaveTop();
+          this.trigger('leaveTop');
         }
       },
       bottom: function() {
@@ -226,6 +249,7 @@ define([
           this.trigger('bottom');
         } else {
           this.leaveBottom();
+          this.trigger('leaveBottom');
         }
       },
       back: function() {

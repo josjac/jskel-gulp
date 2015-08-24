@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:tizen="http://tizen.org/ns/widgets" id="__app_url_id__" version="__app_version__" viewmodes="maximized">
     <access origin="*" subdomains="true"></access>
-    <tizen:application id="OxdC6Iumuf.__app_id__" package="OxdC6Iumuf" required_version="2.2"/>
+    <tizen:application id="__app_package__.__app_id__" package="__app_package__" required_version="2.2"/>
     <content src="index.html"/>
     <feature name="http://tizen.org/feature/screen.size.all"/>
     <icon src="icon/icon.png"/>
