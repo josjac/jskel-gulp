@@ -43,7 +43,7 @@ if (!project.yargs.prod) {
 
   project.static_path = [
     'http://', project.host, project.port, '/static/'
-  ].join('')
+  ].join('');
 }
 
 if (project.yargs.tv_normal) {
@@ -78,6 +78,7 @@ project.sprites = {
 };
 
 project.scripts = {
+  static_path: path.join(project.src_path, 'static'),
   src_path: path.join(project.src_path, 'static', 'scripts'),
   build_path: path.join(project.build_path, 'static', 'scripts'),
   files: path.join(project.src_path, 'static', 'scripts','*.js')
@@ -111,7 +112,9 @@ require('./tasks/watch')(gulp, project);
 require('./tasks/package')(gulp, project);
 
 if (project.yargs.prod) {
-  gulp.task('deploy', ['templates', 'sprites', 'copy:compile', 'scripts']);
+  gulp.task('deploy', ['templates', 'sprites', 'copy:compile'], function() {
+    gulp.start('scripts');
+  });
 }
 else {
   gulp.task('deploy', ['templates', 'sprites', 'copy']);

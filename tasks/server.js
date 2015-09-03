@@ -16,6 +16,7 @@ module.exports = function(gulp, config) {
     var app = connect();
 
     app.use('/static/scripts', serveStatic(path.resolve(config.scripts.src_path)));
+    app.use('/static/libs', serveStatic(path.resolve(path.join(config.src_path, 'static', 'libs'))));
     app.use('/static/typos', serveStatic(path.resolve(path.join(config.src_path, 'static', 'typos'))));
     app.use('/static/images', serveStatic(path.resolve(path.join(config.src_path, 'static', 'images'))));
     app.use('/', serveStatic(path.resolve(config.build_path)));

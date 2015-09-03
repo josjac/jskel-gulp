@@ -5,4 +5,4 @@ dist
 Thumbs*
 *.pyc
 local_settings.py
-src/static/scripts/libs
+src/static/libs

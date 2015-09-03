@@ -14,7 +14,7 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "src/static/scripts/libs",
+    "src/static/libs",
     "test",
     "tests"
   ],
