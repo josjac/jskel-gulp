@@ -6,6 +6,8 @@ var path = require('path');
 
 var merge = require('node.extend');
 
+var clean = require('gulp-clean');
+
 var project = {
   base_path: __dirname,
   build_path: path.join(__dirname, 'build', 'web'),
@@ -110,6 +112,13 @@ require('./tasks/copy')(gulp, project);
 require('./tasks/watch')(gulp, project);
 
 require('./tasks/package')(gulp, project);
+
+gulp.task('clean', function() {
+  gulp.src([
+    project.scripts.build_path
+  ])
+  .pipe(clean({ force: true }));
+});
 
 if (project.yargs.prod) {
   gulp.task('deploy', ['templates', 'sprites', 'copy:compile'], function() {

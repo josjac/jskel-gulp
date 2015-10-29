@@ -7,6 +7,7 @@
     "connect": "^3.3.5",
     "css-sprite": "^0.9.8",
     "gulp": "^3.8.11",
+    "gulp-clean": "^0.3.1",
     "gulp-csso": "^1.0.0",
     "gulp-htmlmin": "^1.1.1",
     "gulp-if": "^1.2.5",
@@ -29,8 +30,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "jayon@funciton.com",
-  "license": "ISC",
+  "author": "JOZ - josalfredyon@gmail.com",
+  "license": "BSD-2-Clouse",
   "repository": {
     "type": "git",
     "url": "git@bitbucket.org:jayon/jskel-gulp.git"
