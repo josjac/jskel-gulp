@@ -1,3 +1,5 @@
+var path = require('path');
+
 var stylus = require('gulp-stylus');
 
 var nib = require('nib');
@@ -7,7 +9,7 @@ var csso = require('gulp-csso');
 var gulpif = require('gulp-if');
 
 function condition(file) {
-  if (file.relative.indexOf('/') === -1) {
+  if (file.relative.indexOf(path.sep) === -1) {
     return true;
   } else {
     return false;
